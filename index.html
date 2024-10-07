@@ -113,7 +113,7 @@
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    alert("Access Denied!!.");
+                    alert("You are not in the allowed location to fill out this form.");
                     break;
                 case error.POSITION_UNAVAILABLE:
                     alert("Location information is unavailable.");
@@ -129,7 +129,7 @@
     </script>
 </head>
 <body onload="checkLocation()">
-    <div id="location-message">Checking your location...</div>
+    <div id="location-message">Please wait a minute...</div>
     <div id="google-form" style="display:none;">
         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfgfxj5fQLjKbVcehxY4PczLPvNNOFjvdfzm7kpmmnjD3W5cw/viewform?embedded=true"></iframe>
     </div>
