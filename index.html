@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Revenues Form</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #location-message {
+            text-align: center;
+            padding: 20px;
+        }
+        #google-form {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        iframe {
+            width: 90%;
+            height: 90%;
+            border: none;
+        }
+        @media (min-width: 768px) {
+            iframe {
+                width: 80%;
+                height: 80%;
+            }
+        }
+        @media (min-width: 1024px) {
+            iframe {
+                width: 70%;
+                height: 70%;
+            }
+        }
+    </style>
+    <script>
+        function checkLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showFormBasedOnLocation, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showFormBasedOnLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            var allowedLocations = [
+                { lat: -1.323057, long: 36.894415 },
+                { lat: -1.319142, long: 36.895740 },
+                { lat: -1.316146, long: 36.892008 },
+                { lat: -1.283725, long: 36.887593 },
+                { lat: -1.141590, long: 36.977460 },
+                { lat: -1.184035, long: 36.897182 },
+                { lat: -1.319636, long: 36.895276 },
+                { lat: -1.286675, long: 36.747138 },
+                { lat: -1.287115, long: 36.747556 },
+                { lat: -1.204819, long: 36.782644 },
+                { lat: -1.289160, long: 36.974736 },
+                { lat: -1.271051, long: 36.996453 },
+                { lat: -1.396732, long: 36.748442 },
+                { lat: -1.398310, long: 36.751777 },
+                { lat: -1.397311, long: 36.757197 },
+                { lat: -1.396529, long: 36.740211 },
+                { lat: -1.397676, long: 36.764096 },
+                { lat: -1.395875, long: 36.753994 },
+                { lat: -1.397078, long: 36.942749 },
+                { lat: -1.484273, long: 36.955345 },
+                { lat: -1.410060, long: 36.712058 },
+                { lat: -1.390652, long: 36.767931 },
+                { lat: -1.292191, long: 36.900263 },
+                { lat: -1.301065, long: 36.889384 },
+                { lat: -1.282560, long: 36.902444 },
+                { lat: -1.362260, long: 36.656281 },
+                { lat: -1.323311, long: 36.885378 },
+                { lat: -1.393827, long: 36.949676 },
+                { lat: -1.279469, long: 36.967978 },
+                { lat: -1.249473, long: 36.987743 },
+                { lat: -1.373835, long: 36.721726 },
+                { lat: -1.268256, long: 36.992174 },
+                { lat: -1.395161, long: 36.733287 },
+                { lat: -1.417789, long: 36.709463 },
+                { lat: -1.392929, long: 36.761354 },
+                { lat: -1.283384, long: 37.101111 },
+                { lat: -1.302543, long: 36.888825 },
+                { lat: -1.280423, long: 36.879716 },
+                { lat: -1.289228, long: 36.903380 },
+                { lat: -1.279258, long: 36.737036 },
+                { lat: -1.186381, long: 36.907148 },
+                { lat: -1.431213, long: 36.686572 },
+                { lat: -1.287662, long: 36.755474 },
+                { lat: -1.228633, long: 36.879379 }
+            ];
+
+            var radius = 0.1; 
+            var isAllowed = allowedLocations.some(function(location) {
+                return Math.abs(latitude - location.lat) <= radius && Math.abs(longitude - location.long) <= radius;
+            });
+
+            if (isAllowed) {
+                document.getElementById('google-form').style.display = 'block';
+                document.getElementById('location-message').style.display = 'none';
+            } else {
+                document.getElementById('location-message').innerHTML = 'You are not in the allowed location to fill out this form.';
+            }
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("Access Denied!!.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</head>
+<body onload="checkLocation()">
+    <div id="location-message">Checking your location...</div>
+    <div id="google-form" style="display:none;">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfgfxj5fQLjKbVcehxY4PczLPvNNOFjvdfzm7kpmmnjD3W5cw/viewform?embedded=true"></iframe>
+    </div>
+</body>
+</html>
